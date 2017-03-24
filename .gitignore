@@ -1,6 +1,8 @@
 // Original JavaSDK ignores
 *.classpath
 *.project
+*.iml
+.idea/
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
@@ -26,6 +28,7 @@ hs_err_pid*
 # Generated files
 bin/
 gen/
+target/
 
 # Gradle files
 .gradle/
