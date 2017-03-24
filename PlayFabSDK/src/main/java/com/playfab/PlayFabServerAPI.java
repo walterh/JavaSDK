@@ -3149,7 +3149,7 @@ public class PlayFabServerAPI {
     }
 
     /**
-     * Adds the virtual goods associated with the coupon to the user's inventory. Coupons can be generated  via the Economy->Catalogs tab in the PlayFab Game Manager.
+     * Adds the virtual goods associated with the coupon to the user's inventory. Coupons can be generated  via the Economy-&GT;Catalogs tab in the PlayFab Game Manager.
      */
     @SuppressWarnings("unchecked")
     public static FutureTask<PlayFabResult<RedeemCouponResult>> RedeemCouponAsync(final RedeemCouponRequest request) {
@@ -3161,7 +3161,7 @@ public class PlayFabServerAPI {
     }
 
     /**
-     * Adds the virtual goods associated with the coupon to the user's inventory. Coupons can be generated  via the Economy->Catalogs tab in the PlayFab Game Manager.
+     * Adds the virtual goods associated with the coupon to the user's inventory. Coupons can be generated  via the Economy-&GT;Catalogs tab in the PlayFab Game Manager.
      */
     @SuppressWarnings("unchecked")
     public static PlayFabResult<RedeemCouponResult> RedeemCoupon(final RedeemCouponRequest request) {
@@ -3179,7 +3179,7 @@ public class PlayFabServerAPI {
     }
 
     /**
-     * Adds the virtual goods associated with the coupon to the user's inventory. Coupons can be generated  via the Economy->Catalogs tab in the PlayFab Game Manager.
+     * Adds the virtual goods associated with the coupon to the user's inventory. Coupons can be generated  via the Economy-&GT;Catalogs tab in the PlayFab Game Manager.
      */
     @SuppressWarnings("unchecked")
     private static PlayFabResult<RedeemCouponResult> privateRedeemCouponAsync(final RedeemCouponRequest request) throws Exception {
@@ -3439,7 +3439,7 @@ public class PlayFabServerAPI {
     }
 
     /**
-     * Opens a specific container (ContainerItemInstanceId), with a specific key (KeyItemInstanceId, when required), and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses > 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
+     * Opens a specific container (ContainerItemInstanceId), with a specific key (KeyItemInstanceId, when required), and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses &GT; 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
      */
     @SuppressWarnings("unchecked")
     public static FutureTask<PlayFabResult<UnlockContainerItemResult>> UnlockContainerInstanceAsync(final UnlockContainerInstanceRequest request) {
@@ -3451,7 +3451,7 @@ public class PlayFabServerAPI {
     }
 
     /**
-     * Opens a specific container (ContainerItemInstanceId), with a specific key (KeyItemInstanceId, when required), and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses > 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
+     * Opens a specific container (ContainerItemInstanceId), with a specific key (KeyItemInstanceId, when required), and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses &GT; 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
      */
     @SuppressWarnings("unchecked")
     public static PlayFabResult<UnlockContainerItemResult> UnlockContainerInstance(final UnlockContainerInstanceRequest request) {
@@ -3469,7 +3469,7 @@ public class PlayFabServerAPI {
     }
 
     /**
-     * Opens a specific container (ContainerItemInstanceId), with a specific key (KeyItemInstanceId, when required), and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses > 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
+     * Opens a specific container (ContainerItemInstanceId), with a specific key (KeyItemInstanceId, when required), and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses &GT; 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
      */
     @SuppressWarnings("unchecked")
     private static PlayFabResult<UnlockContainerItemResult> privateUnlockContainerInstanceAsync(final UnlockContainerInstanceRequest request) throws Exception {
@@ -3497,7 +3497,7 @@ public class PlayFabServerAPI {
     }
 
     /**
-     * Searches Player or Character inventory for any ItemInstance matching the given CatalogItemId, if necessary unlocks it using any appropriate key, and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses > 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
+     * Searches Player or Character inventory for any ItemInstance matching the given CatalogItemId, if necessary unlocks it using any appropriate key, and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses &GT; 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
      */
     @SuppressWarnings("unchecked")
     public static FutureTask<PlayFabResult<UnlockContainerItemResult>> UnlockContainerItemAsync(final UnlockContainerItemRequest request) {
@@ -3509,7 +3509,7 @@ public class PlayFabServerAPI {
     }
 
     /**
-     * Searches Player or Character inventory for any ItemInstance matching the given CatalogItemId, if necessary unlocks it using any appropriate key, and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses > 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
+     * Searches Player or Character inventory for any ItemInstance matching the given CatalogItemId, if necessary unlocks it using any appropriate key, and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses &GT; 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
      */
     @SuppressWarnings("unchecked")
     public static PlayFabResult<UnlockContainerItemResult> UnlockContainerItem(final UnlockContainerItemRequest request) {
@@ -3527,7 +3527,7 @@ public class PlayFabServerAPI {
     }
 
     /**
-     * Searches Player or Character inventory for any ItemInstance matching the given CatalogItemId, if necessary unlocks it using any appropriate key, and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses > 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
+     * Searches Player or Character inventory for any ItemInstance matching the given CatalogItemId, if necessary unlocks it using any appropriate key, and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses &GT; 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
      */
     @SuppressWarnings("unchecked")
     private static PlayFabResult<UnlockContainerItemResult> privateUnlockContainerItemAsync(final UnlockContainerItemRequest request) throws Exception {

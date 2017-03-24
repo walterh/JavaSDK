@@ -133,63 +133,6 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Link Windows Hello to the current PlayFab Account
-     */
-    @SuppressWarnings("unchecked")
-    public static FutureTask<PlayFabResult<LinkWindowsHelloAccountResponse>> LinkWindowsHelloAsync(final LinkWindowsHelloAccountRequest request) {
-        return new FutureTask(new Callable<PlayFabResult<LinkWindowsHelloAccountResponse>>() {
-            public PlayFabResult<LinkWindowsHelloAccountResponse> call() throws Exception {
-                return privateLinkWindowsHelloAsync(request);
-            }
-        });
-    }
-
-    /**
-     * Link Windows Hello to the current PlayFab Account
-     */
-    @SuppressWarnings("unchecked")
-    public static PlayFabResult<LinkWindowsHelloAccountResponse> LinkWindowsHello(final LinkWindowsHelloAccountRequest request) {
-        FutureTask<PlayFabResult<LinkWindowsHelloAccountResponse>> task = new FutureTask(new Callable<PlayFabResult<LinkWindowsHelloAccountResponse>>() {
-            public PlayFabResult<LinkWindowsHelloAccountResponse> call() throws Exception {
-                return privateLinkWindowsHelloAsync(request);
-            }
-        });
-        try {
-            task.run();
-            return task.get();
-        } catch(Exception e) {
-            return null;
-        }
-    }
-
-    /**
-     * Link Windows Hello to the current PlayFab Account
-     */
-    @SuppressWarnings("unchecked")
-    private static PlayFabResult<LinkWindowsHelloAccountResponse> privateLinkWindowsHelloAsync(final LinkWindowsHelloAccountRequest request) throws Exception {
-
-        FutureTask<Object> task = PlayFabHTTP.doPost(PlayFabSettings.GetURL() + "/Client/LinkWindowsHello", request, null, null);
-        task.run();
-        Object httpResult = task.get();
-        if(httpResult instanceof PlayFabError) {
-            PlayFabError error = (PlayFabError)httpResult;
-            if (PlayFabSettings.GlobalErrorHandler != null)
-                PlayFabSettings.GlobalErrorHandler.callback(error);
-            PlayFabResult result = new PlayFabResult<LinkWindowsHelloAccountResponse>();
-            result.Error = error;
-            return result;
-        }
-        String resultRawJson = (String) httpResult;
-
-        PlayFabJsonSuccess<LinkWindowsHelloAccountResponse> resultData = gson.fromJson(resultRawJson, new TypeToken<PlayFabJsonSuccess<LinkWindowsHelloAccountResponse>>(){}.getType());
-        LinkWindowsHelloAccountResponse result = resultData.data;
-
-        PlayFabResult<LinkWindowsHelloAccountResponse> pfResult = new PlayFabResult<LinkWindowsHelloAccountResponse>();
-        pfResult.Result = result;
-        return pfResult;
-    }
-
-    /**
      * Signs the user in using the Android device identifier, returning a session identifier that can subsequently be used for API calls which require an authenticated user
      */
     @SuppressWarnings("unchecked")
@@ -312,7 +255,7 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Signs the user into the PlayFab account, returning a session identifier that can subsequently be used for API calls which require an authenticated user
+     * Signs the user into the PlayFab account, returning a session identifier that can subsequently be used for API calls which require an authenticated user. Unlike most other login API calls, LoginWithEmailAddress does not permit the  creation of new accounts via the CreateAccountFlag. Email addresses may be used to create accounts via RegisterPlayFabUser.
      */
     @SuppressWarnings("unchecked")
     public static FutureTask<PlayFabResult<LoginResult>> LoginWithEmailAddressAsync(final LoginWithEmailAddressRequest request) {
@@ -324,7 +267,7 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Signs the user into the PlayFab account, returning a session identifier that can subsequently be used for API calls which require an authenticated user
+     * Signs the user into the PlayFab account, returning a session identifier that can subsequently be used for API calls which require an authenticated user. Unlike most other login API calls, LoginWithEmailAddress does not permit the  creation of new accounts via the CreateAccountFlag. Email addresses may be used to create accounts via RegisterPlayFabUser.
      */
     @SuppressWarnings("unchecked")
     public static PlayFabResult<LoginResult> LoginWithEmailAddress(final LoginWithEmailAddressRequest request) {
@@ -342,7 +285,7 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Signs the user into the PlayFab account, returning a session identifier that can subsequently be used for API calls which require an authenticated user
+     * Signs the user into the PlayFab account, returning a session identifier that can subsequently be used for API calls which require an authenticated user. Unlike most other login API calls, LoginWithEmailAddress does not permit the  creation of new accounts via the CreateAccountFlag. Email addresses may be used to create accounts via RegisterPlayFabUser.
      */
     @SuppressWarnings("unchecked")
     private static PlayFabResult<LoginResult> privateLoginWithEmailAddressAsync(final LoginWithEmailAddressRequest request) throws Exception {
@@ -678,7 +621,7 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Signs the user into the PlayFab account, returning a session identifier that can subsequently be used for API calls which require an authenticated user. Unlike other login API calls, LoginWithEmailAddress does not permit the creation of new accounts via the CreateAccountFlag. Email accounts must be created using the RegisterPlayFabUser API or added to existing accounts using AddUsernamePassword.
+     * Signs the user into the PlayFab account, returning a session identifier that can subsequently be used for API calls which require an authenticated user. Unlike most other login API calls, LoginWithPlayFab does not permit the  creation of new accounts via the CreateAccountFlag. Username/Password credentials may be used to create accounts via  RegisterPlayFabUser, or added to existing accounts using AddUsernamePassword.
      */
     @SuppressWarnings("unchecked")
     public static FutureTask<PlayFabResult<LoginResult>> LoginWithPlayFabAsync(final LoginWithPlayFabRequest request) {
@@ -690,7 +633,7 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Signs the user into the PlayFab account, returning a session identifier that can subsequently be used for API calls which require an authenticated user. Unlike other login API calls, LoginWithEmailAddress does not permit the creation of new accounts via the CreateAccountFlag. Email accounts must be created using the RegisterPlayFabUser API or added to existing accounts using AddUsernamePassword.
+     * Signs the user into the PlayFab account, returning a session identifier that can subsequently be used for API calls which require an authenticated user. Unlike most other login API calls, LoginWithPlayFab does not permit the  creation of new accounts via the CreateAccountFlag. Username/Password credentials may be used to create accounts via  RegisterPlayFabUser, or added to existing accounts using AddUsernamePassword.
      */
     @SuppressWarnings("unchecked")
     public static PlayFabResult<LoginResult> LoginWithPlayFab(final LoginWithPlayFabRequest request) {
@@ -708,7 +651,7 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Signs the user into the PlayFab account, returning a session identifier that can subsequently be used for API calls which require an authenticated user. Unlike other login API calls, LoginWithEmailAddress does not permit the creation of new accounts via the CreateAccountFlag. Email accounts must be created using the RegisterPlayFabUser API or added to existing accounts using AddUsernamePassword.
+     * Signs the user into the PlayFab account, returning a session identifier that can subsequently be used for API calls which require an authenticated user. Unlike most other login API calls, LoginWithPlayFab does not permit the  creation of new accounts via the CreateAccountFlag. Username/Password credentials may be used to create accounts via  RegisterPlayFabUser, or added to existing accounts using AddUsernamePassword.
      */
     @SuppressWarnings("unchecked")
     private static PlayFabResult<LoginResult> privateLoginWithPlayFabAsync(final LoginWithPlayFabRequest request) throws Exception {
@@ -983,7 +926,7 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Register using Windows Hello authentication. Before a user can request a challenge or perform a signin the user must first either register or link a Windows Hello account.
+     * Registers a new PlayFab user account using Windows Hello authentication, returning a session ticket  that can subsequently be used for API calls which require an authenticated user
      */
     @SuppressWarnings("unchecked")
     public static FutureTask<PlayFabResult<LoginResult>> RegisterWithWindowsHelloAsync(final RegisterWithWindowsHelloRequest request) {
@@ -995,7 +938,7 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Register using Windows Hello authentication. Before a user can request a challenge or perform a signin the user must first either register or link a Windows Hello account.
+     * Registers a new PlayFab user account using Windows Hello authentication, returning a session ticket  that can subsequently be used for API calls which require an authenticated user
      */
     @SuppressWarnings("unchecked")
     public static PlayFabResult<LoginResult> RegisterWithWindowsHello(final RegisterWithWindowsHelloRequest request) {
@@ -1013,7 +956,7 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Register using Windows Hello authentication. Before a user can request a challenge or perform a signin the user must first either register or link a Windows Hello account.
+     * Registers a new PlayFab user account using Windows Hello authentication, returning a session ticket  that can subsequently be used for API calls which require an authenticated user
      */
     @SuppressWarnings("unchecked")
     private static PlayFabResult<LoginResult> privateRegisterWithWindowsHelloAsync(final RegisterWithWindowsHelloRequest request) throws Exception {
@@ -1039,63 +982,6 @@ public class PlayFabClientAPI {
         MultiStepClientLogin(resultData.data.SettingsForUser.NeedsAttribution);
 
         PlayFabResult<LoginResult> pfResult = new PlayFabResult<LoginResult>();
-        pfResult.Result = result;
-        return pfResult;
-    }
-
-    /**
-     * Unlink Windows Hello from the current PlayFab Account
-     */
-    @SuppressWarnings("unchecked")
-    public static FutureTask<PlayFabResult<UnlinkWindowsHelloAccountResponse>> UnlinkWindowsHelloAsync(final UnlinkWindowsHelloAccountRequest request) {
-        return new FutureTask(new Callable<PlayFabResult<UnlinkWindowsHelloAccountResponse>>() {
-            public PlayFabResult<UnlinkWindowsHelloAccountResponse> call() throws Exception {
-                return privateUnlinkWindowsHelloAsync(request);
-            }
-        });
-    }
-
-    /**
-     * Unlink Windows Hello from the current PlayFab Account
-     */
-    @SuppressWarnings("unchecked")
-    public static PlayFabResult<UnlinkWindowsHelloAccountResponse> UnlinkWindowsHello(final UnlinkWindowsHelloAccountRequest request) {
-        FutureTask<PlayFabResult<UnlinkWindowsHelloAccountResponse>> task = new FutureTask(new Callable<PlayFabResult<UnlinkWindowsHelloAccountResponse>>() {
-            public PlayFabResult<UnlinkWindowsHelloAccountResponse> call() throws Exception {
-                return privateUnlinkWindowsHelloAsync(request);
-            }
-        });
-        try {
-            task.run();
-            return task.get();
-        } catch(Exception e) {
-            return null;
-        }
-    }
-
-    /**
-     * Unlink Windows Hello from the current PlayFab Account
-     */
-    @SuppressWarnings("unchecked")
-    private static PlayFabResult<UnlinkWindowsHelloAccountResponse> privateUnlinkWindowsHelloAsync(final UnlinkWindowsHelloAccountRequest request) throws Exception {
-
-        FutureTask<Object> task = PlayFabHTTP.doPost(PlayFabSettings.GetURL() + "/Client/UnlinkWindowsHello", request, null, null);
-        task.run();
-        Object httpResult = task.get();
-        if(httpResult instanceof PlayFabError) {
-            PlayFabError error = (PlayFabError)httpResult;
-            if (PlayFabSettings.GlobalErrorHandler != null)
-                PlayFabSettings.GlobalErrorHandler.callback(error);
-            PlayFabResult result = new PlayFabResult<UnlinkWindowsHelloAccountResponse>();
-            result.Error = error;
-            return result;
-        }
-        String resultRawJson = (String) httpResult;
-
-        PlayFabJsonSuccess<UnlinkWindowsHelloAccountResponse> resultData = gson.fromJson(resultRawJson, new TypeToken<PlayFabJsonSuccess<UnlinkWindowsHelloAccountResponse>>(){}.getType());
-        UnlinkWindowsHelloAccountResponse result = resultData.data;
-
-        PlayFabResult<UnlinkWindowsHelloAccountResponse> pfResult = new PlayFabResult<UnlinkWindowsHelloAccountResponse>();
         pfResult.Result = result;
         return pfResult;
     }
@@ -2261,6 +2147,63 @@ public class PlayFabClientAPI {
     }
 
     /**
+     * Link Windows Hello authentication to the current PlayFab Account
+     */
+    @SuppressWarnings("unchecked")
+    public static FutureTask<PlayFabResult<LinkWindowsHelloAccountResponse>> LinkWindowsHelloAsync(final LinkWindowsHelloAccountRequest request) {
+        return new FutureTask(new Callable<PlayFabResult<LinkWindowsHelloAccountResponse>>() {
+            public PlayFabResult<LinkWindowsHelloAccountResponse> call() throws Exception {
+                return privateLinkWindowsHelloAsync(request);
+            }
+        });
+    }
+
+    /**
+     * Link Windows Hello authentication to the current PlayFab Account
+     */
+    @SuppressWarnings("unchecked")
+    public static PlayFabResult<LinkWindowsHelloAccountResponse> LinkWindowsHello(final LinkWindowsHelloAccountRequest request) {
+        FutureTask<PlayFabResult<LinkWindowsHelloAccountResponse>> task = new FutureTask(new Callable<PlayFabResult<LinkWindowsHelloAccountResponse>>() {
+            public PlayFabResult<LinkWindowsHelloAccountResponse> call() throws Exception {
+                return privateLinkWindowsHelloAsync(request);
+            }
+        });
+        try {
+            task.run();
+            return task.get();
+        } catch(Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     * Link Windows Hello authentication to the current PlayFab Account
+     */
+    @SuppressWarnings("unchecked")
+    private static PlayFabResult<LinkWindowsHelloAccountResponse> privateLinkWindowsHelloAsync(final LinkWindowsHelloAccountRequest request) throws Exception {
+
+        FutureTask<Object> task = PlayFabHTTP.doPost(PlayFabSettings.GetURL() + "/Client/LinkWindowsHello", request, null, null);
+        task.run();
+        Object httpResult = task.get();
+        if(httpResult instanceof PlayFabError) {
+            PlayFabError error = (PlayFabError)httpResult;
+            if (PlayFabSettings.GlobalErrorHandler != null)
+                PlayFabSettings.GlobalErrorHandler.callback(error);
+            PlayFabResult result = new PlayFabResult<LinkWindowsHelloAccountResponse>();
+            result.Error = error;
+            return result;
+        }
+        String resultRawJson = (String) httpResult;
+
+        PlayFabJsonSuccess<LinkWindowsHelloAccountResponse> resultData = gson.fromJson(resultRawJson, new TypeToken<PlayFabJsonSuccess<LinkWindowsHelloAccountResponse>>(){}.getType());
+        LinkWindowsHelloAccountResponse result = resultData.data;
+
+        PlayFabResult<LinkWindowsHelloAccountResponse> pfResult = new PlayFabResult<LinkWindowsHelloAccountResponse>();
+        pfResult.Result = result;
+        return pfResult;
+    }
+
+    /**
      * Removes the specified generic service identifier from the player's PlayFab account.
      */
     @SuppressWarnings("unchecked")
@@ -2951,6 +2894,63 @@ public class PlayFabClientAPI {
         UnlinkTwitchAccountResult result = resultData.data;
 
         PlayFabResult<UnlinkTwitchAccountResult> pfResult = new PlayFabResult<UnlinkTwitchAccountResult>();
+        pfResult.Result = result;
+        return pfResult;
+    }
+
+    /**
+     * Unlink Windows Hello authentication from the current PlayFab Account
+     */
+    @SuppressWarnings("unchecked")
+    public static FutureTask<PlayFabResult<UnlinkWindowsHelloAccountResponse>> UnlinkWindowsHelloAsync(final UnlinkWindowsHelloAccountRequest request) {
+        return new FutureTask(new Callable<PlayFabResult<UnlinkWindowsHelloAccountResponse>>() {
+            public PlayFabResult<UnlinkWindowsHelloAccountResponse> call() throws Exception {
+                return privateUnlinkWindowsHelloAsync(request);
+            }
+        });
+    }
+
+    /**
+     * Unlink Windows Hello authentication from the current PlayFab Account
+     */
+    @SuppressWarnings("unchecked")
+    public static PlayFabResult<UnlinkWindowsHelloAccountResponse> UnlinkWindowsHello(final UnlinkWindowsHelloAccountRequest request) {
+        FutureTask<PlayFabResult<UnlinkWindowsHelloAccountResponse>> task = new FutureTask(new Callable<PlayFabResult<UnlinkWindowsHelloAccountResponse>>() {
+            public PlayFabResult<UnlinkWindowsHelloAccountResponse> call() throws Exception {
+                return privateUnlinkWindowsHelloAsync(request);
+            }
+        });
+        try {
+            task.run();
+            return task.get();
+        } catch(Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     * Unlink Windows Hello authentication from the current PlayFab Account
+     */
+    @SuppressWarnings("unchecked")
+    private static PlayFabResult<UnlinkWindowsHelloAccountResponse> privateUnlinkWindowsHelloAsync(final UnlinkWindowsHelloAccountRequest request) throws Exception {
+
+        FutureTask<Object> task = PlayFabHTTP.doPost(PlayFabSettings.GetURL() + "/Client/UnlinkWindowsHello", request, null, null);
+        task.run();
+        Object httpResult = task.get();
+        if(httpResult instanceof PlayFabError) {
+            PlayFabError error = (PlayFabError)httpResult;
+            if (PlayFabSettings.GlobalErrorHandler != null)
+                PlayFabSettings.GlobalErrorHandler.callback(error);
+            PlayFabResult result = new PlayFabResult<UnlinkWindowsHelloAccountResponse>();
+            result.Error = error;
+            return result;
+        }
+        String resultRawJson = (String) httpResult;
+
+        PlayFabJsonSuccess<UnlinkWindowsHelloAccountResponse> resultData = gson.fromJson(resultRawJson, new TypeToken<PlayFabJsonSuccess<UnlinkWindowsHelloAccountResponse>>(){}.getType());
+        UnlinkWindowsHelloAccountResponse result = resultData.data;
+
+        PlayFabResult<UnlinkWindowsHelloAccountResponse> pfResult = new PlayFabResult<UnlinkWindowsHelloAccountResponse>();
         pfResult.Result = result;
         return pfResult;
     }
@@ -3652,7 +3652,7 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Updates the values of the specified title-specific statistics for the user. By default, clients are not permitted to update statistics. Developers may override this setting in the Game Manager > Settings > API Features.
+     * Updates the values of the specified title-specific statistics for the user. By default, clients are not permitted to update statistics. Developers may override this setting in the Game Manager &GT; Settings &GT; API Features.
      */
     @SuppressWarnings("unchecked")
     public static FutureTask<PlayFabResult<UpdatePlayerStatisticsResult>> UpdatePlayerStatisticsAsync(final UpdatePlayerStatisticsRequest request) {
@@ -3664,7 +3664,7 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Updates the values of the specified title-specific statistics for the user. By default, clients are not permitted to update statistics. Developers may override this setting in the Game Manager > Settings > API Features.
+     * Updates the values of the specified title-specific statistics for the user. By default, clients are not permitted to update statistics. Developers may override this setting in the Game Manager &GT; Settings &GT; API Features.
      */
     @SuppressWarnings("unchecked")
     public static PlayFabResult<UpdatePlayerStatisticsResult> UpdatePlayerStatistics(final UpdatePlayerStatisticsRequest request) {
@@ -3682,7 +3682,7 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Updates the values of the specified title-specific statistics for the user. By default, clients are not permitted to update statistics. Developers may override this setting in the Game Manager > Settings > API Features.
+     * Updates the values of the specified title-specific statistics for the user. By default, clients are not permitted to update statistics. Developers may override this setting in the Game Manager &GT; Settings &GT; API Features.
      */
     @SuppressWarnings("unchecked")
     private static PlayFabResult<UpdatePlayerStatisticsResult> privateUpdatePlayerStatisticsAsync(final UpdatePlayerStatisticsRequest request) throws Exception {
@@ -4406,7 +4406,7 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Retrieves a completed purchase along with its current PlayFab status.
+     * Retrieves a purchase along with its current PlayFab status.
      */
     @SuppressWarnings("unchecked")
     public static FutureTask<PlayFabResult<GetPurchaseResult>> GetPurchaseAsync(final GetPurchaseRequest request) {
@@ -4418,7 +4418,7 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Retrieves a completed purchase along with its current PlayFab status.
+     * Retrieves a purchase along with its current PlayFab status.
      */
     @SuppressWarnings("unchecked")
     public static PlayFabResult<GetPurchaseResult> GetPurchase(final GetPurchaseRequest request) {
@@ -4436,7 +4436,7 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Retrieves a completed purchase along with its current PlayFab status.
+     * Retrieves a purchase along with its current PlayFab status.
      */
     @SuppressWarnings("unchecked")
     private static PlayFabResult<GetPurchaseResult> privateGetPurchaseAsync(final GetPurchaseRequest request) throws Exception {
@@ -4638,7 +4638,7 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Adds the virtual goods associated with the coupon to the user's inventory. Coupons can be generated  via the Economy->Catalogs tab in the PlayFab Game Manager.
+     * Adds the virtual goods associated with the coupon to the user's inventory. Coupons can be generated  via the Economy-&GT;Catalogs tab in the PlayFab Game Manager.
      */
     @SuppressWarnings("unchecked")
     public static FutureTask<PlayFabResult<RedeemCouponResult>> RedeemCouponAsync(final RedeemCouponRequest request) {
@@ -4650,7 +4650,7 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Adds the virtual goods associated with the coupon to the user's inventory. Coupons can be generated  via the Economy->Catalogs tab in the PlayFab Game Manager.
+     * Adds the virtual goods associated with the coupon to the user's inventory. Coupons can be generated  via the Economy-&GT;Catalogs tab in the PlayFab Game Manager.
      */
     @SuppressWarnings("unchecked")
     public static PlayFabResult<RedeemCouponResult> RedeemCoupon(final RedeemCouponRequest request) {
@@ -4668,7 +4668,7 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Adds the virtual goods associated with the coupon to the user's inventory. Coupons can be generated  via the Economy->Catalogs tab in the PlayFab Game Manager.
+     * Adds the virtual goods associated with the coupon to the user's inventory. Coupons can be generated  via the Economy-&GT;Catalogs tab in the PlayFab Game Manager.
      */
     @SuppressWarnings("unchecked")
     private static PlayFabResult<RedeemCouponResult> privateRedeemCouponAsync(final RedeemCouponRequest request) throws Exception {
@@ -4812,7 +4812,7 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Opens the specified container, with the specified key (when required), and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses > 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
+     * Opens the specified container, with the specified key (when required), and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses &GT; 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
      */
     @SuppressWarnings("unchecked")
     public static FutureTask<PlayFabResult<UnlockContainerItemResult>> UnlockContainerInstanceAsync(final UnlockContainerInstanceRequest request) {
@@ -4824,7 +4824,7 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Opens the specified container, with the specified key (when required), and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses > 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
+     * Opens the specified container, with the specified key (when required), and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses &GT; 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
      */
     @SuppressWarnings("unchecked")
     public static PlayFabResult<UnlockContainerItemResult> UnlockContainerInstance(final UnlockContainerInstanceRequest request) {
@@ -4842,7 +4842,7 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Opens the specified container, with the specified key (when required), and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses > 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
+     * Opens the specified container, with the specified key (when required), and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses &GT; 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
      */
     @SuppressWarnings("unchecked")
     private static PlayFabResult<UnlockContainerItemResult> privateUnlockContainerInstanceAsync(final UnlockContainerInstanceRequest request) throws Exception {
@@ -4870,7 +4870,7 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Searches target inventory for an ItemInstance matching the given CatalogItemId, if necessary unlocks it using an appropriate key, and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses > 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
+     * Searches target inventory for an ItemInstance matching the given CatalogItemId, if necessary unlocks it using an appropriate key, and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses &GT; 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
      */
     @SuppressWarnings("unchecked")
     public static FutureTask<PlayFabResult<UnlockContainerItemResult>> UnlockContainerItemAsync(final UnlockContainerItemRequest request) {
@@ -4882,7 +4882,7 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Searches target inventory for an ItemInstance matching the given CatalogItemId, if necessary unlocks it using an appropriate key, and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses > 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
+     * Searches target inventory for an ItemInstance matching the given CatalogItemId, if necessary unlocks it using an appropriate key, and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses &GT; 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
      */
     @SuppressWarnings("unchecked")
     public static PlayFabResult<UnlockContainerItemResult> UnlockContainerItem(final UnlockContainerItemRequest request) {
@@ -4900,7 +4900,7 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Searches target inventory for an ItemInstance matching the given CatalogItemId, if necessary unlocks it using an appropriate key, and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses > 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
+     * Searches target inventory for an ItemInstance matching the given CatalogItemId, if necessary unlocks it using an appropriate key, and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses &GT; 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
      */
     @SuppressWarnings("unchecked")
     private static PlayFabResult<UnlockContainerItemResult> privateUnlockContainerItemAsync(final UnlockContainerItemRequest request) throws Exception {
@@ -5218,7 +5218,7 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Restores all in-app purchases based on the given refresh receipt.
+     * Restores all in-app purchases based on the given restore receipt
      */
     @SuppressWarnings("unchecked")
     public static FutureTask<PlayFabResult<RestoreIOSPurchasesResult>> RestoreIOSPurchasesAsync(final RestoreIOSPurchasesRequest request) {
@@ -5230,7 +5230,7 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Restores all in-app purchases based on the given refresh receipt.
+     * Restores all in-app purchases based on the given restore receipt
      */
     @SuppressWarnings("unchecked")
     public static PlayFabResult<RestoreIOSPurchasesResult> RestoreIOSPurchases(final RestoreIOSPurchasesRequest request) {
@@ -5248,7 +5248,7 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Restores all in-app purchases based on the given refresh receipt.
+     * Restores all in-app purchases based on the given restore receipt
      */
     @SuppressWarnings("unchecked")
     private static PlayFabResult<RestoreIOSPurchasesResult> privateRestoreIOSPurchasesAsync(final RestoreIOSPurchasesRequest request) throws Exception {
@@ -6610,7 +6610,7 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Updates the values of the specified title-specific statistics for the specific character. By default, clients are not permitted to update statistics. Developers may override this setting in the Game Manager > Settings > API Features.
+     * Updates the values of the specified title-specific statistics for the specific character. By default, clients are not permitted to update statistics. Developers may override this setting in the Game Manager &GT; Settings &GT; API Features.
      */
     @SuppressWarnings("unchecked")
     public static FutureTask<PlayFabResult<UpdateCharacterStatisticsResult>> UpdateCharacterStatisticsAsync(final UpdateCharacterStatisticsRequest request) {
@@ -6622,7 +6622,7 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Updates the values of the specified title-specific statistics for the specific character. By default, clients are not permitted to update statistics. Developers may override this setting in the Game Manager > Settings > API Features.
+     * Updates the values of the specified title-specific statistics for the specific character. By default, clients are not permitted to update statistics. Developers may override this setting in the Game Manager &GT; Settings &GT; API Features.
      */
     @SuppressWarnings("unchecked")
     public static PlayFabResult<UpdateCharacterStatisticsResult> UpdateCharacterStatistics(final UpdateCharacterStatisticsRequest request) {
@@ -6640,7 +6640,7 @@ public class PlayFabClientAPI {
     }
 
     /**
-     * Updates the values of the specified title-specific statistics for the specific character. By default, clients are not permitted to update statistics. Developers may override this setting in the Game Manager > Settings > API Features.
+     * Updates the values of the specified title-specific statistics for the specific character. By default, clients are not permitted to update statistics. Developers may override this setting in the Game Manager &GT; Settings &GT; API Features.
      */
     @SuppressWarnings("unchecked")
     private static PlayFabResult<UpdateCharacterStatisticsResult> privateUpdateCharacterStatisticsAsync(final UpdateCharacterStatisticsRequest request) throws Exception {

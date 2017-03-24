@@ -286,7 +286,9 @@ public class PlayFabErrors {
         InvalidStatistic(1283),
         ExpressionParseFailure(1284),
         ExpressionInvokeFailure(1285),
-        ExpressionTooLong(1286);
+        ExpressionTooLong(1286),
+        DataUpdateRateExceeded(1287),
+        RestrictedEmailDomain(1288);
 
         public int id;
 

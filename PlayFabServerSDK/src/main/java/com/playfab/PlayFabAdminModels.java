@@ -199,7 +199,7 @@ public class PlayFabAdminModels {
          */
         public Date Timestamp;
         /**
-         * Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
+         * Unique identifier for the title, found in the Settings &GT; Game Properties section of the PlayFab developer site when a title has been selected.
          */
         public String TitleId;
         /**
@@ -1104,7 +1104,7 @@ public class PlayFabAdminModels {
          */
         public ArrayList<String> PlayFabIds;
         /**
-         * Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
+         * Unique identifier for the title, found in the Settings &GT; Game Properties section of the PlayFab developer site when a title has been selected.
          */
         public String TitleId;
         
@@ -1665,7 +1665,7 @@ public class PlayFabAdminModels {
          */
         public Date Timestamp;
         /**
-         * Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
+         * Unique identifier for the title, found in the Settings &GT; Game Properties section of the PlayFab developer site when a title has been selected.
          */
         public String TitleId;
         /**
@@ -2273,7 +2273,7 @@ public class PlayFabAdminModels {
          */
         public Date Timestamp;
         /**
-         * Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
+         * Unique identifier for the title, found in the Settings &GT; Game Properties section of the PlayFab developer site when a title has been selected.
          */
         public String TitleId;
         /**
