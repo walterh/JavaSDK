@@ -1,8 +1,9 @@
-// Original JavaSDK ignores
+// Basic JavaSDK ignores
 *.classpath
 *.project
 *.iml
 .idea/
+build/
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
