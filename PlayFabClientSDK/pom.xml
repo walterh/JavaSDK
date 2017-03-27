@@ -219,4 +219,10 @@
             </plugin>
         </plugins>
     </reporting>
+    <distributionManagement>
+        <repository>
+            <id>nexus</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </repository>
+    </distributionManagement>
 </project>

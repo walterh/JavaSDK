@@ -90,11 +90,11 @@ public class PlayFabApiTest
         USER_EMAIL = resultData.userEmail;
     }
 
-    /// <summary>
-    /// CLIENT API
-    /// Try to deliberately log in with an inappropriate password,
-    ///   and verify that the error displays as expected.
-    /// </summary>
+    /**
+     *  CLIENT API
+     *  Try to deliberately log in with an inappropriate password,
+     *    and verify that the error displays as expected.
+     */
     @Test
     public void InvalidLogin()
     {
@@ -108,11 +108,11 @@ public class PlayFabApiTest
         assertTrue(result.Error.errorMessage.contains("password"));
     }
 
-    /// <summary>
-    /// CLIENT API
-    /// Try to deliberately register a user with an invalid email and password
-    ///   Verify that errorDetails are populated correctly.
-    /// </summary>
+    /**
+     *  CLIENT API
+     *  Try to deliberately register a user with an invalid email and password
+     *    Verify that errorDetails are populated correctly.
+     */
     @Test
     public void InvalidRegistration()
     {
@@ -132,10 +132,10 @@ public class PlayFabApiTest
         assertTrue("Expected an error about password: " + errorDetails, errorDetails.toLowerCase().contains(expectedPasswordMsg));
     }
 
-    /// <summary>
-    /// CLIENT API
-    /// Log in or create a user, track their PlayFabId
-    /// </summary>
+    /**
+     *  CLIENT API
+     *  Log in or create a user, track their PlayFabId
+     */
     @Test
     public void LoginOrRegister()
     {
@@ -150,10 +150,10 @@ public class PlayFabApiTest
         playFabId = result.Result.PlayFabId;
     }
 
-    /// <summary>
-    /// CLIENT API
-    /// Test that the login call sequence sends the AdvertisingId when set
-    /// </summary>
+    /**
+     *  CLIENT API
+     *  Test that the login call sequence sends the AdvertisingId when set
+     */
     @Test
     public void LoginWithAdvertisingId()
     {
@@ -169,13 +169,13 @@ public class PlayFabApiTest
         assertEquals(PlayFabSettings.AD_TYPE_ANDROID_ID + "_Successful", PlayFabSettings.AdvertisingIdType);
     }
 
-    /// <summary>
-    /// CLIENT API
-    /// Test a sequence of calls that modifies saved data,
-    ///   and verifies that the next sequential API call contains updated data.
-    /// Verify that the data is correctly modified on the next call.
-    /// Parameter types tested: string, Dictionary<string, string>, DateTime
-    /// </summary>
+    /**
+     *  CLIENT API
+     *  Test a sequence of calls that modifies saved data,
+     *    and verifies that the next sequential API call contains updated data.
+     *  Verify that the data is correctly modified on the next call.
+     *  Parameter types tested: string, Dictionary<string, string>, DateTime
+     */
     @Test
     public void UserDataApi()
     {
@@ -215,13 +215,13 @@ public class PlayFabApiTest
         // assertTrue("Update time does not match: " + timeUpdated + " != " + utcnow, testMin.before(timeUpdated) && timeUpdated.before(testMax));
     }
 
-    /// <summary>
-    /// CLIENT API
-    /// Test a sequence of calls that modifies saved data,
-    ///   and verifies that the next sequential API call contains updated data.
-    /// Verify that the data is saved correctly, and that specific types are tested
-    /// Parameter types tested: Dictionary<string, int>
-    /// </summary>
+    /**
+     *  CLIENT API
+     *  Test a sequence of calls that modifies saved data,
+     *    and verifies that the next sequential API call contains updated data.
+     *  Verify that the data is saved correctly, and that specific types are tested
+     *  Parameter types tested: Dictionary<string, int>
+     */
     @Test
     public void PlayerStatisticsApi()
     {
@@ -256,11 +256,11 @@ public class PlayFabApiTest
         assertEquals(String.format("Stats were not updated.  Expected: %d, Actual: %d", testStatExpected, testStatActual), testStatExpected, testStatActual);
     }
 
-    /// <summary>
-    /// CLIENT API
-    /// Get or create the given test character for the given user
-    /// Parameter types tested: Contained-Classes, string
-    /// </summary>
+    /**
+     *  CLIENT API
+     *  Get or create the given test character for the given user
+     *  Parameter types tested: Contained-Classes, string
+     */
     @Test
     public void UserCharacter()
     {
@@ -272,11 +272,11 @@ public class PlayFabApiTest
         VerifyResult(getCharsResult, true);
     }
 
-    /// <summary>
-    /// CLIENT API
-    /// Test that leaderboard results can be requested
-    /// Parameter types tested: List of contained-classes
-    /// </summary>
+    /**
+     *  CLIENT API
+     *  Test that leaderboard results can be requested
+     *  Parameter types tested: List of contained-classes
+     */
     @Test
     public void LeaderBoard()
     {
@@ -298,11 +298,11 @@ public class PlayFabApiTest
         return count;
     }
 
-    /// <summary>
-    /// CLIENT API
-    /// Test that AccountInfo can be requested
-    /// Parameter types tested: List of enum-as-strings converted to list of enums
-    /// </summary>
+    /**
+     *  CLIENT API
+     *  Test that AccountInfo can be requested
+     *  Parameter types tested: List of enum-as-strings converted to list of enums
+     */
     @Test
     public void AccountInfo()
     {
@@ -319,10 +319,10 @@ public class PlayFabApiTest
         assertTrue(validOption);
     }
 
-    /// <summary>
-    /// CLIENT API
-    /// Test that CloudScript can be properly set up and invoked
-    /// </summary>
+    /**
+     *  CLIENT API
+     *  Test that CloudScript can be properly set up and invoked
+     */
     @Test
     public void CloudScript()
     {
@@ -337,10 +337,10 @@ public class PlayFabApiTest
         assertEquals(arbitraryResults.get("messageValue"), "Hello " + playFabId + "!");
     }
 
-    /// <summary>
-    /// CLIENT API
-    /// Test that CloudScript errors can be deciphered
-    /// </summary>
+    /**
+     *  CLIENT API
+     *  Test that CloudScript errors can be deciphered
+     */
     @Test
     public void CloudScriptError()
     {
@@ -355,10 +355,10 @@ public class PlayFabApiTest
         assertEquals(errResult.Result.Error.Error, "JavascriptException");
     }
 
-    /// <summary>
-    /// CLIENT API
-    /// Test that the client can publish custom PlayStream events
-    /// </summary>
+    /**
+     *  CLIENT API
+     *  Test that the client can publish custom PlayStream events
+     */
     @Test
     public void WriteEvent()
     {
@@ -374,3 +374,4 @@ public class PlayFabApiTest
         VerifyResult(result, true);
     }
 }
+
