@@ -1,11 +1,10 @@
-package com.playfab.androidstudioexample;
+package com.playfab.test;
 
 import static org.junit.Assert.*;
 import org.junit.*;
 
 import java.util.*;
 import java.io.*;
-import java.util.Properties;
 
 import com.google.gson.*;
 import com.google.gson.reflect.*;
