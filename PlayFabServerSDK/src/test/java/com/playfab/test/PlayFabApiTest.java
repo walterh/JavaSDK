@@ -1,4 +1,4 @@
-import static org.junit.Assert.*; // bad
+import static org.junit.Assert.*;
 import org.junit.*;
 
 import java.util.*;
