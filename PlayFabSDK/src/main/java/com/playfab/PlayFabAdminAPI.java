@@ -17,7 +17,7 @@ import com.playfab.internal.PlayFabHTTP;
  * APIs for managing title configurations, uploaded Game Server code executables, and user data
  */
 public class PlayFabAdminAPI {
-    private Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").create();
+    private static Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").create();
 
     private PlayFabSettings playFabSettings;
     
