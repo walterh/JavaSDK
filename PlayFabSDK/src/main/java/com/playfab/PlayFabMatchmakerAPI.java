@@ -1,13 +1,25 @@
 package com.playfab;
 
-import com.playfab.internal.*;
-import com.playfab.PlayFabMatchmakerModels.*;
-import com.playfab.PlayFabErrors.*;
-import com.playfab.PlayFabSettings;
-import java.util.concurrent.*;
-import java.util.*;
-import com.google.gson.*;
-import com.google.gson.reflect.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.FutureTask;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.playfab.PlayFabErrors.PlayFabError;
+import com.playfab.PlayFabErrors.PlayFabJsonSuccess;
+import com.playfab.PlayFabErrors.PlayFabResult;
+import com.playfab.PlayFabMatchmakerModels.AuthUserRequest;
+import com.playfab.PlayFabMatchmakerModels.AuthUserResponse;
+import com.playfab.PlayFabMatchmakerModels.PlayerJoinedRequest;
+import com.playfab.PlayFabMatchmakerModels.PlayerJoinedResponse;
+import com.playfab.PlayFabMatchmakerModels.PlayerLeftRequest;
+import com.playfab.PlayFabMatchmakerModels.PlayerLeftResponse;
+import com.playfab.PlayFabMatchmakerModels.StartGameRequest;
+import com.playfab.PlayFabMatchmakerModels.StartGameResponse;
+import com.playfab.PlayFabMatchmakerModels.UserInfoRequest;
+import com.playfab.PlayFabMatchmakerModels.UserInfoResponse;
+import com.playfab.internal.PlayFabHTTP;
 
 
 /**
@@ -16,11 +28,17 @@ import com.google.gson.reflect.*;
 public class PlayFabMatchmakerAPI {
     private static Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").create();
 
+    private PlayFabSettings playFabSettings;
+    
+    public PlayFabMatchmakerAPI(PlayFabSettings playFabSettings) {
+    	this.playFabSettings = playFabSettings;
+    }
+    
     /**
      * Validates a user with the PlayFab service
      */
     @SuppressWarnings("unchecked")
-    public static FutureTask<PlayFabResult<AuthUserResponse>> AuthUserAsync(final AuthUserRequest request) {
+    public FutureTask<PlayFabResult<AuthUserResponse>> AuthUserAsync(final AuthUserRequest request) {
         return new FutureTask(new Callable<PlayFabResult<AuthUserResponse>>() {
             public PlayFabResult<AuthUserResponse> call() throws Exception {
                 return privateAuthUserAsync(request);
@@ -32,7 +50,7 @@ public class PlayFabMatchmakerAPI {
      * Validates a user with the PlayFab service
      */
     @SuppressWarnings("unchecked")
-    public static PlayFabResult<AuthUserResponse> AuthUser(final AuthUserRequest request) {
+    public PlayFabResult<AuthUserResponse> AuthUser(final AuthUserRequest request) {
         FutureTask<PlayFabResult<AuthUserResponse>> task = new FutureTask(new Callable<PlayFabResult<AuthUserResponse>>() {
             public PlayFabResult<AuthUserResponse> call() throws Exception {
                 return privateAuthUserAsync(request);
@@ -50,10 +68,10 @@ public class PlayFabMatchmakerAPI {
      * Validates a user with the PlayFab service
      */
     @SuppressWarnings("unchecked")
-    private static PlayFabResult<AuthUserResponse> privateAuthUserAsync(final AuthUserRequest request) throws Exception {
-        if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
+    private PlayFabResult<AuthUserResponse> privateAuthUserAsync(final AuthUserRequest request) throws Exception {
+        if (playFabSettings.GetDeveloperSecretKey() == null) throw new Exception ("Must have playFabSettings.GetDeveloperSecretKey() set to call this method");
 
-        FutureTask<Object> task = PlayFabHTTP.doPost(PlayFabSettings.GetURL() + "/Matchmaker/AuthUser", request, "X-SecretKey", PlayFabSettings.DeveloperSecretKey);
+        FutureTask<Object> task = PlayFabHTTP.doPost(playFabSettings.GetURL() + "/Matchmaker/AuthUser", request, "X-SecretKey", playFabSettings.GetDeveloperSecretKey());
         task.run();
         Object httpResult = task.get();
         if(httpResult instanceof PlayFabError) {
@@ -78,7 +96,7 @@ public class PlayFabMatchmakerAPI {
      * Informs the PlayFab game server hosting service that the indicated user has joined the Game Server Instance specified
      */
     @SuppressWarnings("unchecked")
-    public static FutureTask<PlayFabResult<PlayerJoinedResponse>> PlayerJoinedAsync(final PlayerJoinedRequest request) {
+    public FutureTask<PlayFabResult<PlayerJoinedResponse>> PlayerJoinedAsync(final PlayerJoinedRequest request) {
         return new FutureTask(new Callable<PlayFabResult<PlayerJoinedResponse>>() {
             public PlayFabResult<PlayerJoinedResponse> call() throws Exception {
                 return privatePlayerJoinedAsync(request);
@@ -90,7 +108,7 @@ public class PlayFabMatchmakerAPI {
      * Informs the PlayFab game server hosting service that the indicated user has joined the Game Server Instance specified
      */
     @SuppressWarnings("unchecked")
-    public static PlayFabResult<PlayerJoinedResponse> PlayerJoined(final PlayerJoinedRequest request) {
+    public PlayFabResult<PlayerJoinedResponse> PlayerJoined(final PlayerJoinedRequest request) {
         FutureTask<PlayFabResult<PlayerJoinedResponse>> task = new FutureTask(new Callable<PlayFabResult<PlayerJoinedResponse>>() {
             public PlayFabResult<PlayerJoinedResponse> call() throws Exception {
                 return privatePlayerJoinedAsync(request);
@@ -108,10 +126,10 @@ public class PlayFabMatchmakerAPI {
      * Informs the PlayFab game server hosting service that the indicated user has joined the Game Server Instance specified
      */
     @SuppressWarnings("unchecked")
-    private static PlayFabResult<PlayerJoinedResponse> privatePlayerJoinedAsync(final PlayerJoinedRequest request) throws Exception {
-        if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
+    private PlayFabResult<PlayerJoinedResponse> privatePlayerJoinedAsync(final PlayerJoinedRequest request) throws Exception {
+        if (playFabSettings.GetDeveloperSecretKey() == null) throw new Exception ("Must have playFabSettings.GetDeveloperSecretKey() set to call this method");
 
-        FutureTask<Object> task = PlayFabHTTP.doPost(PlayFabSettings.GetURL() + "/Matchmaker/PlayerJoined", request, "X-SecretKey", PlayFabSettings.DeveloperSecretKey);
+        FutureTask<Object> task = PlayFabHTTP.doPost(playFabSettings.GetURL() + "/Matchmaker/PlayerJoined", request, "X-SecretKey", playFabSettings.GetDeveloperSecretKey());
         task.run();
         Object httpResult = task.get();
         if(httpResult instanceof PlayFabError) {
@@ -136,7 +154,7 @@ public class PlayFabMatchmakerAPI {
      * Informs the PlayFab game server hosting service that the indicated user has left the Game Server Instance specified
      */
     @SuppressWarnings("unchecked")
-    public static FutureTask<PlayFabResult<PlayerLeftResponse>> PlayerLeftAsync(final PlayerLeftRequest request) {
+    public FutureTask<PlayFabResult<PlayerLeftResponse>> PlayerLeftAsync(final PlayerLeftRequest request) {
         return new FutureTask(new Callable<PlayFabResult<PlayerLeftResponse>>() {
             public PlayFabResult<PlayerLeftResponse> call() throws Exception {
                 return privatePlayerLeftAsync(request);
@@ -148,7 +166,7 @@ public class PlayFabMatchmakerAPI {
      * Informs the PlayFab game server hosting service that the indicated user has left the Game Server Instance specified
      */
     @SuppressWarnings("unchecked")
-    public static PlayFabResult<PlayerLeftResponse> PlayerLeft(final PlayerLeftRequest request) {
+    public PlayFabResult<PlayerLeftResponse> PlayerLeft(final PlayerLeftRequest request) {
         FutureTask<PlayFabResult<PlayerLeftResponse>> task = new FutureTask(new Callable<PlayFabResult<PlayerLeftResponse>>() {
             public PlayFabResult<PlayerLeftResponse> call() throws Exception {
                 return privatePlayerLeftAsync(request);
@@ -166,10 +184,10 @@ public class PlayFabMatchmakerAPI {
      * Informs the PlayFab game server hosting service that the indicated user has left the Game Server Instance specified
      */
     @SuppressWarnings("unchecked")
-    private static PlayFabResult<PlayerLeftResponse> privatePlayerLeftAsync(final PlayerLeftRequest request) throws Exception {
-        if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
+    private PlayFabResult<PlayerLeftResponse> privatePlayerLeftAsync(final PlayerLeftRequest request) throws Exception {
+        if (playFabSettings.GetDeveloperSecretKey() == null) throw new Exception ("Must have playFabSettings.GetDeveloperSecretKey() set to call this method");
 
-        FutureTask<Object> task = PlayFabHTTP.doPost(PlayFabSettings.GetURL() + "/Matchmaker/PlayerLeft", request, "X-SecretKey", PlayFabSettings.DeveloperSecretKey);
+        FutureTask<Object> task = PlayFabHTTP.doPost(playFabSettings.GetURL() + "/Matchmaker/PlayerLeft", request, "X-SecretKey", playFabSettings.GetDeveloperSecretKey());
         task.run();
         Object httpResult = task.get();
         if(httpResult instanceof PlayFabError) {
@@ -194,7 +212,7 @@ public class PlayFabMatchmakerAPI {
      * Instructs the PlayFab game server hosting service to instantiate a new Game Server Instance
      */
     @SuppressWarnings("unchecked")
-    public static FutureTask<PlayFabResult<StartGameResponse>> StartGameAsync(final StartGameRequest request) {
+    public FutureTask<PlayFabResult<StartGameResponse>> StartGameAsync(final StartGameRequest request) {
         return new FutureTask(new Callable<PlayFabResult<StartGameResponse>>() {
             public PlayFabResult<StartGameResponse> call() throws Exception {
                 return privateStartGameAsync(request);
@@ -206,7 +224,7 @@ public class PlayFabMatchmakerAPI {
      * Instructs the PlayFab game server hosting service to instantiate a new Game Server Instance
      */
     @SuppressWarnings("unchecked")
-    public static PlayFabResult<StartGameResponse> StartGame(final StartGameRequest request) {
+    public PlayFabResult<StartGameResponse> StartGame(final StartGameRequest request) {
         FutureTask<PlayFabResult<StartGameResponse>> task = new FutureTask(new Callable<PlayFabResult<StartGameResponse>>() {
             public PlayFabResult<StartGameResponse> call() throws Exception {
                 return privateStartGameAsync(request);
@@ -224,10 +242,10 @@ public class PlayFabMatchmakerAPI {
      * Instructs the PlayFab game server hosting service to instantiate a new Game Server Instance
      */
     @SuppressWarnings("unchecked")
-    private static PlayFabResult<StartGameResponse> privateStartGameAsync(final StartGameRequest request) throws Exception {
-        if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
+    private PlayFabResult<StartGameResponse> privateStartGameAsync(final StartGameRequest request) throws Exception {
+        if (playFabSettings.GetDeveloperSecretKey() == null) throw new Exception ("Must have playFabSettings.GetDeveloperSecretKey() set to call this method");
 
-        FutureTask<Object> task = PlayFabHTTP.doPost(PlayFabSettings.GetURL() + "/Matchmaker/StartGame", request, "X-SecretKey", PlayFabSettings.DeveloperSecretKey);
+        FutureTask<Object> task = PlayFabHTTP.doPost(playFabSettings.GetURL() + "/Matchmaker/StartGame", request, "X-SecretKey", playFabSettings.GetDeveloperSecretKey());
         task.run();
         Object httpResult = task.get();
         if(httpResult instanceof PlayFabError) {
@@ -252,7 +270,7 @@ public class PlayFabMatchmakerAPI {
      * Retrieves the relevant details for a specified user, which the external match-making service can then use to compute effective matches
      */
     @SuppressWarnings("unchecked")
-    public static FutureTask<PlayFabResult<UserInfoResponse>> UserInfoAsync(final UserInfoRequest request) {
+    public FutureTask<PlayFabResult<UserInfoResponse>> UserInfoAsync(final UserInfoRequest request) {
         return new FutureTask(new Callable<PlayFabResult<UserInfoResponse>>() {
             public PlayFabResult<UserInfoResponse> call() throws Exception {
                 return privateUserInfoAsync(request);
@@ -264,7 +282,7 @@ public class PlayFabMatchmakerAPI {
      * Retrieves the relevant details for a specified user, which the external match-making service can then use to compute effective matches
      */
     @SuppressWarnings("unchecked")
-    public static PlayFabResult<UserInfoResponse> UserInfo(final UserInfoRequest request) {
+    public PlayFabResult<UserInfoResponse> UserInfo(final UserInfoRequest request) {
         FutureTask<PlayFabResult<UserInfoResponse>> task = new FutureTask(new Callable<PlayFabResult<UserInfoResponse>>() {
             public PlayFabResult<UserInfoResponse> call() throws Exception {
                 return privateUserInfoAsync(request);
@@ -282,10 +300,10 @@ public class PlayFabMatchmakerAPI {
      * Retrieves the relevant details for a specified user, which the external match-making service can then use to compute effective matches
      */
     @SuppressWarnings("unchecked")
-    private static PlayFabResult<UserInfoResponse> privateUserInfoAsync(final UserInfoRequest request) throws Exception {
-        if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
+    private PlayFabResult<UserInfoResponse> privateUserInfoAsync(final UserInfoRequest request) throws Exception {
+        if (playFabSettings.GetDeveloperSecretKey() == null) throw new Exception ("Must have playFabSettings.GetDeveloperSecretKey() set to call this method");
 
-        FutureTask<Object> task = PlayFabHTTP.doPost(PlayFabSettings.GetURL() + "/Matchmaker/UserInfo", request, "X-SecretKey", PlayFabSettings.DeveloperSecretKey);
+        FutureTask<Object> task = PlayFabHTTP.doPost(playFabSettings.GetURL() + "/Matchmaker/UserInfo", request, "X-SecretKey", playFabSettings.GetDeveloperSecretKey());
         task.run();
         Object httpResult = task.get();
         if(httpResult instanceof PlayFabError) {
